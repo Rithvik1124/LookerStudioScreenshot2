@@ -1,3 +1,16 @@
 selenium
 streamlit
 chromedriver-autoinstaller
+wget
+unzip
+curl
+libglib2.0-0
+libnss3
+libgconf-2-4
+libfontconfig1
+libxss1
+libappindicator1
+libasound2
+libatk-bridge2.0-0
+libgtk-3-0
+xdg-utils
