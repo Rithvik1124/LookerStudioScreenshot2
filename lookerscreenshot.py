@@ -89,13 +89,13 @@ def run_report_automation(report_name, start_date, end_date):
 
 
     chrome_options = Options()
-    chrome_options.binary_location = chrome_binary  # where Chrome gets installed
+    chrome_options.binary_location = "/usr/bin/google-chrome"  # where Chrome gets installed
     chrome_options.add_argument("--headless=new")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1920,1080")
-    service = Service(executable_path=chromedriver_path)
+    service = Service(executable_path="/usr/local/bin/chromedriver")
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.get(url)
     driver.execute_script("document.body.style.zoom='33%'")
