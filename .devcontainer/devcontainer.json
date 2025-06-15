@@ -2,26 +2,10 @@
   "name": "Streamlit + Selenium",
   "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
 
-  "customizations": {
-    "codespaces": {
-      "openFiles": ["README.md", "lookerscreenshot.py"]
-    },
-    "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "ms-python.vscode-pylance"
-      ]
-    }
-  },
-
-  "features": {},
-
   "postCreateCommand": "bash setup.sh",
-
   "postAttachCommand": "streamlit run lookerscreenshot.py --server.enableCORS false --server.enableXsrfProtection false",
 
   "forwardPorts": [8501],
-
   "portsAttributes": {
     "8501": {
       "label": "Streamlit App",
