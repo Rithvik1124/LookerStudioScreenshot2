@@ -1,0 +1,4 @@
+selenium
+streamlit
+base64
+tempfile
