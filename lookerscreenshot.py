@@ -9,7 +9,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import base64
 import time
-
+import chromedriver_autoinstaller
+chromedriver_autoinstaller.install()
 # Report dictionary
 reports = {
     #"BW Generation": "https://lookerstudio.google.com/reporting/7f396517-bca2-4f32-bdd4-6e3d69bc593b",
