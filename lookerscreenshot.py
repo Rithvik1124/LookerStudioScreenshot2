@@ -4,14 +4,11 @@ import os
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import base64
 import time
-import chromedriver_autoinstaller
-
 
 # Report dictionary
 reports = {
@@ -85,26 +82,24 @@ def run_report_automation(report_name, start_date, end_date):
     end_month = end_date.month
     end_year = end_date.year
 
-
     chrome_options = Options()
-    chrome_options.binary_location = "/usr/bin/google-chrome"  # where Chrome gets installed
     chrome_options.add_argument("--headless=new")
     chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1920,1080")
-    service = Service(executable_path="/usr/local/bin/chromedriver")
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+
+    driver = webdriver.Chrome(options=chrome_options)
     driver.get(url)
     driver.execute_script("document.body.style.zoom='33%'")
 
     try:
+        # Wait for date picker and click
         date_picker_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, ".mdc-button.mat-mdc-button-base.mat-mdc-tooltip-trigger.ng2-date-picker-button.mdc-button--outlined.mat-mdc-outlined-button.mat-unthemed.canvas-date-input"))
         )
         driver.execute_script("arguments[0].click();", date_picker_button)
         time.sleep(3)
 
+        # START DATE
         start_calendar_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, '.mdc-button.mat-mdc-button-base.mat-calendar-period-button'))
         )
@@ -140,13 +135,15 @@ def run_report_automation(report_name, start_date, end_date):
             EC.element_to_be_clickable((By.CSS_SELECTOR, f'.end-date-picker.calendar-wrapper button.mat-calendar-body-cell[aria-label="{end_day} {months[end_month][:3]} {end_year}"]'))
         ).click()
 
+        # Apply button
         apply_button = WebDriverWait(driver, 15).until(
             EC.element_to_be_clickable((By.XPATH, '//button[.//span[text()="Apply"]]'))
         )
         time.sleep(1)
         driver.execute_script("arguments[0].click();", apply_button)
 
-        time.sleep(10)  
+        time.sleep(10)  # Let data reload
+
         output_file = os.path.join(
             tempfile.gettempdir(),
             f"{report_name}_{start_date.isoformat()}_to_{end_date.isoformat()}.pdf"
@@ -159,6 +156,7 @@ def run_report_automation(report_name, start_date, end_date):
         driver.quit()
 
 
+# ----------------- STREAMLIT UI --------------------
 
 st.title("📊 Looker Report Exporter")
 
