@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -87,13 +88,14 @@ def run_report_automation(report_name, start_date, end_date):
 
 
     chrome_options = Options()
-    service = Service(executable_path="/usr/local/bin/chromedriver")  # Or wherever it's installed
-    options.binary_location = "/usr/bin/google-chrome"  # Path to Chrome
+    chrome_options.binary_location = "/usr/bin/google-chrome"  # where Chrome gets installed
     chrome_options.add_argument("--headless=new")
     chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1920,1080")
-
-    driver = webdriver.Chrome(options=chrome_options, service=service)
+    service = Service(executable_path="/usr/local/bin/chromedriver")
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.get(url)
     driver.execute_script("document.body.style.zoom='33%'")
 
