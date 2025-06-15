@@ -10,7 +10,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import base64
 import time
 import chromedriver_autoinstaller
-chromedriver_autoinstaller.install()
+
+
 # Report dictionary
 reports = {
     #"BW Generation": "https://lookerstudio.google.com/reporting/7f396517-bca2-4f32-bdd4-6e3d69bc593b",
@@ -82,6 +83,8 @@ def run_report_automation(report_name, start_date, end_date):
     end_day = end_date.day
     end_month = end_date.month
     end_year = end_date.year
+    chromedriver_autoinstaller.install()
+
 
     chrome_options = Options()
     chrome_options.add_argument("--headless=new")
