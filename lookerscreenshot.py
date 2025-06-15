@@ -84,8 +84,6 @@ def run_report_automation(report_name, start_date, end_date):
     end_day = end_date.day
     end_month = end_date.month
     end_year = end_date.year
-    chrome_binary = st.secrets["CHROME_BINARY"]
-    chromedriver_path = st.secrets["CHROMEDRIVER_PATH"]
 
 
     chrome_options = Options()
